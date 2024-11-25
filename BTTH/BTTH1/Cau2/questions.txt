@@ -1,0 +1,27 @@
+Câu 1: Đây là câu hỏi đầu tiên?
+A. Đáp án A
+B. Đáp án B
+C. Đáp án C
+D. Đáp án D
+Đáp án: A
+
+Câu 2: Đây là câu hỏi thứ hai?
+A. Đáp án A
+B. Đáp án B
+C. Đáp án C
+D. Đáp án D
+Đáp án: B
+
+Câu 3: Đây là câu hỏi thứ ba?
+A. Đáp án A
+B. Đáp án B
+C. Đáp án C
+D. Đáp án D
+Đáp án: C
+
+Câu 4: Đây là câu hỏi thứ tư?
+A. Đáp án A
+B. Đáp án B
+C. Đáp án C
+D. Đáp án D
+Đáp án: D
