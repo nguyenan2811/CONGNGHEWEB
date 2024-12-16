@@ -39,64 +39,72 @@ class IssueController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'computer_name' => 'required|string|max:255',
-            'version_name' => 'required|string|max:255',
-            'reporter_name' => 'required|string|max:255',
-            'report_time' => 'required|date',
-            'severity' => 'required|string',
-            'status' => 'required|string',
+        $validated = $request->validate([
+            'computer_id' => 'required|exists:computers,id', 
+            'reported_by' => 'required|string|max:50',
+            'reported_date' => 'required|date',
+            'description' => 'required|string',
+            'urgency' => 'required|in:Low,Medium,High',
+            'status' => 'required|in:Open,In Progress,Resolved',
         ]);
-    
-        // Lưu dữ liệu vào cơ sở dữ liệu
-        Issue::create($validatedData);
-    
-        return redirect()->route('issues.index')->with('success', 'Vấn đề đã được thêm thành công!');
-    }
-    
-    
 
+
+        Issue::create($validated);
+
+        return redirect()->route('issues.index')->with('success','Vấn đề đã được thêm thành công!');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        $issue = Issue::with('computer')->findOrFail($id);
+        return view('issues.show', compact('issue'));
+    }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
-{
-    $issue = Issue::findOrFail($id); // Lấy dữ liệu từ DB
-    return view('issues.edit', compact('issue')); // Truyền $issue sang view
-}
-
+    public function edit(string $id)
+    {
+        $issue = Issue::findOrFail($id);
+        $computers = Computer::all();
+        return view('issues.edit', compact('issue', 'computers'));
+    }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
-        $validatedData = $request->validate([
-            'computer_name' => 'required|string|max:255',
-            'version_name' => 'required|string|max:255',
-            'reporter_name' => 'required|string|max:255',
-            'report_time' => 'required|date',
-            'severity' => 'required|string',
-            'status' => 'required|string',
+
+        $request->validate([
+            'computer_id' => 'required|exists:computers,id',  
+            'reported_by' => 'required|max:50',
+            'reported_date' => 'nullable|date', 
+            'description' => 'required|string',
+            'urgency' => 'required|in:Low,Medium,High',
+            'status' => 'required|in:Open,In Progress,Resolved',
         ]);
-    
-        // Tìm và cập nhật dữ liệu
+
         $issue = Issue::findOrFail($id);
-        $issue->update($validatedData);
-    
+        $issue->update($request->all());  
+
+
         return redirect()->route('issues.index')->with('success', 'Vấn đề đã được cập nhật thành công!');
     }
-    
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(string $id)
     {
-        $issues = Issue::findOrFail($id);
-        $issues->delete();
-        return redirect()->route('issues.index')->with('success', 'Vấn đề đã được xóa!');
+        // Tìm và xóa vấn đề
+        $issue = Issue::findOrFail($id);
+        $issue->delete();
+
+        // Quay lại trang danh sách với thông báo thành công
+        return redirect()->route('issues.index')->with('success', 'Vấn đề đã được xóa thành công!');
     }
-    
 }
