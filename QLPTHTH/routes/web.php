@@ -13,8 +13,6 @@ Route::get('/issues/create', [IssueController::class, 'create'])->name('issues.c
 // Đường dẫn để lưu dữ liệu đồ án mới (thực hiện thêm mới)
 Route::post('/issues', [IssueController::class, 'store'])->name('issues.store');
 
-// Đường dẫn để hiển thị chi tiết một đồ án cụ thể (tuỳ chọn)
-Route::get('/issues/{id}', [IssueController::class, 'show'])->name('issues.show');
 
 // Đường dẫn để chỉnh sửa thông tin đồ án (hiển thị form chỉnh sửa)
 Route::get('/issues/{id}/edit', [IssueController::class, 'edit'])->name('issues.edit');

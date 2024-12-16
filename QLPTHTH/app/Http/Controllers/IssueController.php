@@ -42,7 +42,7 @@ class IssueController extends Controller
         $validated = $request->validate([
             'computer_id' => 'required|exists:computers,id', 
             'reported_by' => 'required|string|max:50',
-            'reported_date' => 'required|date',
+            'reperted_date' => 'required|date',
             'description' => 'required|string',
             'urgency' => 'required|in:Low,Medium,High',
             'status' => 'required|in:Open,In Progress,Resolved',
@@ -82,7 +82,7 @@ class IssueController extends Controller
         $request->validate([
             'computer_id' => 'required|exists:computers,id',  
             'reported_by' => 'required|max:50',
-            'reported_date' => 'nullable|date', 
+            'reperted_date' => 'nullable|date', 
             'description' => 'required|string',
             'urgency' => 'required|in:Low,Medium,High',
             'status' => 'required|in:Open,In Progress,Resolved',
